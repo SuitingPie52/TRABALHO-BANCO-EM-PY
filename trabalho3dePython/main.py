@@ -1,9 +1,28 @@
 from cliente import Cliente
+from conta import Conta
+from historico import Historico
+
+def imprimir_todos_conjunto(conjunto_classes):
+    for i in conjunto_classes:
+        i.imprimir()
+
+
+def encontrar_pelo_cpf(cpf, conjunto_classes):
+
+    for i in conjunto_classes:
+
+        if i.cpf == cpf:
+            return i
+
+    return None
+
 
 def menu():
 
     opcao = 0
     clientes = []
+    contas = []
+    h = Historico()
 
     while opcao != -1:
         print("\n|==================================================|\n"
@@ -32,36 +51,105 @@ def menu():
             nome = input("Qual será o nome desse cliente? ")
 
             clientes.append(Cliente(cpf, nome))
+            print("Cliente adicionado!")
 
         elif opcao == 2:
 
             cpf = input("Qual será o CPF do cliente que você deseja escrever em .txt? ")
-            encontrou = False
 
-            for i in clientes:
+            cliente_desejado = encontrar_pelo_cpf(cpf, clientes)
 
-                if i.cpf == cpf:
-                    i.gravar_arq()
-                    encontrou = True
-
-            if encontrou:
+            if cliente_desejado:
+                cliente_desejado.gravar_arq()
                 print("Os dados foram escritos!")
             else:
                 print("Cliente não encontrado.")
 
         elif opcao == 3:
 
-            pass
+            imprimir_todos_conjunto(clientes)
 
         elif opcao == 4:
 
-            pass
+            cpf = input("Você deseja abrir uma conta para qual cliente? (Informe o CPF dele) ")
+            numero_conta = input("Qual será o número de identificação dessa conta? ")
+            saldo = int(input("Qual será o saldo inicial dessa conta? "))
+
+            contas.append(Conta(cpf, numero_conta, saldo))
+            print("Conta adicionado!")
 
         elif opcao == 5:
 
-            pass
+            cpf = input("Qual é o CPF identificador dessa conta que você deseja escrever em .txt? ")
+
+            conta_desejada = encontrar_pelo_cpf(cpf, contas)
+
+            if conta_desejada:
+                conta_desejada.gravar_arq()
+                print("Os dados foram escritos!")
+
+            else:
+                print("Conta não encontrada.")
 
         elif opcao == 6:
 
-            pass
+            imprimir_todos_conjunto(contas)
 
+        elif opcao == 7:
+
+            cpf = input("Qual é o CPF identificador da conta em que você deseja depositar? ")
+            valor = int(input("Qual é o valor que você deseja depositar? "))
+
+            conta_desejada = encontrar_pelo_cpf(cpf, contas)
+
+            if conta_desejada:
+                conta_desejada.depositar(valor)
+                h = h.atualizar(f"Depósito: {str(conta_desejada.cpf)}")
+                print("Valor depositado!")
+
+            else:
+                print("Conta não encontrada.")
+
+        elif opcao == 8:
+
+            cpf = input("Qual é o CPF identificador da conta em que você sacar? ")
+            valor = int(input("Qual é o valor que você deseja sacar? "))
+
+            conta_desejada = encontrar_pelo_cpf(cpf, contas)
+
+            if conta_desejada:
+                conta_desejada.sacar(valor)
+                h = h.atualizar(f"Sacar: {str(conta_desejada.cpf)}")
+                print("Valor sacado!")
+
+            else:
+                print("Conta não encontrada.")
+
+        elif opcao == 9:
+
+            cpf1 = input("Você deseja transferir de qual conta? (Informe o CPF)")
+            cpf2 = input("Para qual? (Informe o cpf)")
+
+            conta_que_envia = encontrar_pelo_cpf(cpf1, contas)
+            conta_que_recebe = encontrar_pelo_cpf(cpf2, contas)
+
+            valor = int(input("Qual é o valor que você deseja transferir? "))
+
+            if conta_que_envia and conta_que_recebe:
+                conta_que_envia.transferir(conta_que_recebe, valor)
+                h = h.atualizar(f"Transferência: {str(conta_que_envia)} -> {str(conta_que_recebe)}")
+                print("Valor transferido!")
+
+            else:
+                print("Erro ao passar o CPF das contas.")
+
+        elif opcao == 10:
+            h.gravar_arq()
+            print("Os dados foram gravados!")
+
+        elif opcao == 11:
+            h.imprimir()
+
+
+if __name__ == '__main__':
+    menu()

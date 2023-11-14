@@ -56,4 +56,4 @@ class Conta:
     def imprimir(self):
 
         print(f"CPF: {self.cpf}/ Número: {self.numero}/ Saldo: {self.saldo}/ Depositado: {self.deposito}/ "
-              f"Sacado: {self.saque}\n\n")
+              f"Sacado: {self.saque}\n")

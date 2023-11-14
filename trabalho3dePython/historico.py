@@ -5,7 +5,7 @@ class Historico:
     def __init__(self):
 
         """
-        datas_movimento: será um array onde as chaves serão as operações (ex: Depósito: {cliente.nome})
+        datas_movimento: será um array onde as chaves serão as operações (ex: Depósito: {conta.cpf})
         e a data em que foi executada a ação
         """
 
@@ -13,7 +13,7 @@ class Historico:
 
     def atualizar(self, movimento):
 
-        self.datas_movimento.append(movimento + "/ Data: " + date.today())
+        self.datas_movimento.append(str(movimento) + "/ Data: " + str(date.today()))
 
     def gravar_arq(self):
 

@@ -13,5 +13,4 @@ class Cliente:
 
     def imprimir(self):
 
-        print(f"CPF: {self.cpf}/ Nome: {self.nome}\n")
-
+        print(f"CPF: {self.cpf}/ Nome: {self.nome}")
