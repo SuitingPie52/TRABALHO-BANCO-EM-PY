@@ -15,9 +15,9 @@ class Conta:
         self.saque = 0
 
     def gravar_arq(self):
-        with open("Contas.txt", "a") as arquivo:
+        with open("../Contas.txt", "a") as arquivo:
             arquivo.write(f"CPF: {self.cpf}/ Número: {self.numero}/ Saldo: {self.saldo}/ Depositado: {self.deposito}/ "
-                          f"Sacado: {self.saque}\n\n")
+                          f"Sacado: {self.saque}\n")
 
     def depositar(self, valor):
 
@@ -33,6 +33,7 @@ class Conta:
         else:
             self.saque += valor
             self.saldo -= valor
+            print("Valor sacado!")
 
     def transferir(self, outra_conta, valor):
 
@@ -52,8 +53,9 @@ class Conta:
             self.saldo -= valor
             outra_conta.saldo += valor
             outra_conta.deposito += valor
+            print("Valor transferido!\n")
 
     def imprimir(self):
 
         print(f"CPF: {self.cpf}/ Número: {self.numero}/ Saldo: {self.saldo}/ Depositado: {self.deposito}/ "
-              f"Sacado: {self.saque}\n")
+              f"Sacado: {self.saque}")

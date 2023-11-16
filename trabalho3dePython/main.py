@@ -1,6 +1,7 @@
-from cliente import Cliente
-from conta import Conta
-from historico import Historico
+from trabalho3dePython.cliente import Cliente
+from trabalho3dePython.conta import Conta
+from trabalho3dePython.historico import Historico
+
 
 def imprimir_todos_conjunto(conjunto_classes):
     for i in conjunto_classes:
@@ -112,23 +113,26 @@ def menu():
 
         elif opcao == 8:
 
-            cpf = input("Qual é o CPF identificador da conta em que você sacar? ")
+            cpf = input("Qual é o CPF identificador da conta em que você quer sacar? ")
             valor = int(input("Qual é o valor que você deseja sacar? "))
+
+            """
+            Não funciona com valores muito altos.
+            """
 
             conta_desejada = encontrar_pelo_cpf(cpf, contas)
 
             if conta_desejada:
                 conta_desejada.sacar(valor)
                 h = h.atualizar(f"Sacar: {str(conta_desejada.cpf)}")
-                print("Valor sacado!")
 
             else:
                 print("Conta não encontrada.")
 
         elif opcao == 9:
 
-            cpf1 = input("Você deseja transferir de qual conta? (Informe o CPF)")
-            cpf2 = input("Para qual? (Informe o cpf)")
+            cpf1 = input("Você deseja transferir de qual conta? (Informe o CPF) ")
+            cpf2 = input("Para qual? (Informe o cpf) ")
 
             conta_que_envia = encontrar_pelo_cpf(cpf1, contas)
             conta_que_recebe = encontrar_pelo_cpf(cpf2, contas)
@@ -137,8 +141,7 @@ def menu():
 
             if conta_que_envia and conta_que_recebe:
                 conta_que_envia.transferir(conta_que_recebe, valor)
-                h = h.atualizar(f"Transferência: {str(conta_que_envia)} -> {str(conta_que_recebe)}")
-                print("Valor transferido!")
+                h = h.atualizar(f"Transferência: {str(conta_que_envia.cpf)} -> {str(conta_que_recebe.cpf)}")
 
             else:
                 print("Erro ao passar o CPF das contas.")
@@ -151,5 +154,4 @@ def menu():
             h.imprimir()
 
 
-if __name__ == '__main__':
-    menu()
+menu()

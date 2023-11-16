@@ -14,12 +14,13 @@ class Historico:
     def atualizar(self, movimento):
 
         self.datas_movimento.append(str(movimento) + "/ Data: " + str(date.today()))
+        return self
 
     def gravar_arq(self):
 
-        for i in self.datas_movimento:
+        with open("../Historico.txt", "w") as arquivo:
 
-            with open("Historico.txt", "w") as arquivo:
+            for i in self.datas_movimento:
 
                 arquivo.write(i + "\n")
 
