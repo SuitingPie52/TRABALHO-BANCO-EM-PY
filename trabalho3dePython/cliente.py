@@ -7,7 +7,7 @@ class Cliente:
 
     def gravar_arq(self):
 
-        with open("../Clientes.txt", "a") as arquivo:
+        with open("Clientes.txt", "a") as arquivo:
 
             arquivo.write(f"CPF: {self.cpf}/ Nome: {self.nome}\n")
 
