@@ -1,6 +1,6 @@
-from trabalho3dePython.cliente import Cliente
-from trabalho3dePython.conta import Conta
-from trabalho3dePython.historico import Historico
+from cliente import Cliente
+from conta import Conta
+from historico import Historico
 
 
 def imprimir_todos_conjunto(conjunto_classes):
@@ -90,17 +90,22 @@ def menu():
         elif opcao == 5:
 
             cpf = input("Qual é o CPF identificador da conta em que você quer sacar? ")
-            valor = int(input("Qual é o valor que você deseja sacar? "))
-
-            """
-            Não funciona com valores muito altos.
-            """
-
             conta_desejada = encontrar_pelo_cpf(cpf, contas)
 
             if conta_desejada:
-                conta_desejada.sacar(valor)
-                h = h.atualizar(f"Sacar: {str(conta_desejada.cpf)}")
+
+                valor = int(input("Qual é o valor que você deseja sacar? "))
+
+                if valor > conta_desejada.saldo:
+                    """
+                    como o valor é maior que o saldo, a função informará que não há saldo 
+                    e o histórico não será atualizado 
+                    """
+                    conta_desejada.sacar(valor)
+
+                else:
+                    conta_desejada.sacar(valor)
+                    h = h.atualizar(f"Sacar: {str(conta_desejada.cpf)}")
 
             else:
                 print("Conta não encontrada.")
@@ -113,11 +118,31 @@ def menu():
             conta_que_envia = encontrar_pelo_cpf(cpf1, contas)
             conta_que_recebe = encontrar_pelo_cpf(cpf2, contas)
 
-            valor = int(input("Qual é o valor que você deseja transferir? "))
+            """
+            Se ambas as contas existirem existirem, irá ser verificado se há saldo disponível para a transferência.
+            
+            Caso o saldo seja suficiente, será transferido e adicionado ao histórico.
+            
+            Caso o saldo seja insuficiente, 
+            a função irá ser executada (dirá que saldo é insuficiente) e o histórico não será alterado.
+            
+            Se alguma delas não existir, informará um erro no CPF
+            """
 
             if conta_que_envia and conta_que_recebe:
-                conta_que_envia.transferir(conta_que_recebe, valor)
-                h = h.atualizar(f"Transferência: {str(conta_que_envia.cpf)} -> {str(conta_que_recebe.cpf)}")
+
+                valor = int(input("Qual é o valor que você deseja transferir? "))
+
+                if valor > conta_que_envia.saldo:
+
+                    conta_que_envia.transferir(conta_que_recebe, valor)
+                    """
+                    como nesse caso o saldo é insuficiente, a função apenas irá printar que o saldo não é suficiente
+                    """
+
+                else:
+                    conta_que_envia.transferir(conta_que_recebe, valor)
+                    h = h.atualizar(f"Transferência: {str(conta_que_envia.cpf)} -> {str(conta_que_recebe.cpf)}")
 
             else:
                 print("Erro ao passar o CPF das contas.")
