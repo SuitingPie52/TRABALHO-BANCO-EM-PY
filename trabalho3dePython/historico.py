@@ -5,7 +5,7 @@ class Historico:
     def __init__(self):
 
         """
-        datas_movimento: será um array onde as chaves serão as operações (ex: Depósito: {conta.cpf})
+        datas_movimento: será um array onde as chaves serão as operações (ex: Depósito: {cliente.nome})
         e a data em que foi executada a ação
         """
 
@@ -13,14 +13,14 @@ class Historico:
 
     def atualizar(self, movimento):
 
-        self.datas_movimento.append(str(movimento) + "/ Data: " + str(date.today()))
+        self.datas_movimento.append(movimento + "/ Data: " + str(date.today()))
         return self
 
     def gravar_arq(self):
 
-        with open("../Historico.txt", "w") as arquivo:
+        for i in self.datas_movimento:
 
-            for i in self.datas_movimento:
+            with open("Historico.txt", "w") as arquivo:
 
                 arquivo.write(i + "\n")
 
@@ -29,3 +29,6 @@ class Historico:
         for i in self.datas_movimento:
 
             print(i)
+
+
+
