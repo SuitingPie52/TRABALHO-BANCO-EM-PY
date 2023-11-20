@@ -18,10 +18,9 @@ class Historico:
 
     def gravar_arq(self):
 
-        for i in self.datas_movimento:
+        with open("Historico.txt", "w") as arquivo:
 
-            with open("Historico.txt", "w") as arquivo:
-
+            for i in self.datas_movimento:
                 arquivo.write(i + "\n")
 
     def imprimir(self):
@@ -29,6 +28,5 @@ class Historico:
         for i in self.datas_movimento:
 
             print(i)
-
 
 
