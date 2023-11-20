@@ -15,7 +15,7 @@ class Conta:
         self.saque = 0
 
     def gravar_arq(self):
-        with open("../Contas.txt", "a") as arquivo:
+        with open("Contas.txt", "a") as arquivo:
             arquivo.write(f"CPF: {self.cpf}/ Número: {self.numero}/ Saldo: {self.saldo}/ Depositado: {self.deposito}/ "
                           f"Sacado: {self.saque}\n")
 
